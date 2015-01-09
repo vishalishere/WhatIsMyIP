@@ -44,25 +44,27 @@
         {
             // new IPRecipy("http://ifconfig.me/ip", RawIpAddressAsText),
             // new IPRecipy("http://corz.org/ip", RawIpAddressAsText),
+            new IPRecipy("http://bot.whatismyipaddress.com/", RawIpAddressAsText),
+            new IPRecipy("http://curlmyip.com/", RawIpAddressAsText),
+            new IPRecipy("http://icanhazip.com/", RawIpAddressAsText),
+            new IPRecipy("http://ip.qaros.com/", RawIpAddressAsText),
+            new IPRecipy("http://ipecho.net/plain", RawIpAddressAsText),
+            new IPRecipy("http://ipinfo.io/ip", RawIpAddressAsText),
             new IPRecipy("http://myexternalip.com/raw", RawIpAddressAsText),
-            new IPRecipy("http://wtfismyip.com/text", RawIpAddressAsText),
-            new IPRecipy("http://ipinfo.io/json", _ => AsDynamicJson(_).ip),
-            new IPRecipy("http://what-is-my-ip.net/?json", _ => (string)AsDynamicJson(_)),
+            new IPRecipy("http://wtfismyip.com/text", RawIpAddressAsText),        
             new IPRecipy("http://api.ipify.org?format=json", _ => AsDynamicJson(_).ip),
+            new IPRecipy("http://checkip.dyndns.org/", _ => _.Substring(_.IndexOf("Current IP Address: ")).Replace ("Current IP Address: ", "").Replace("</body></html>", "").Trim()),
             new IPRecipy("http://ip-api.com/json", _ => AsDynamicJson(_).query),
             new IPRecipy("http://ipinfo.io/json", _ => AsDynamicJson(_).ip),
-            new IPRecipy("http://ipinfo.io/ip", RawIpAddressAsText),
-            new IPRecipy("http://bot.whatismyipaddress.com/", RawIpAddressAsText),
-            new IPRecipy("http://icanhazip.com/", RawIpAddressAsText),
-            new IPRecipy("http://curlmyip.com/", RawIpAddressAsText),
-            new IPRecipy("http://checkip.dyndns.org/", _ => _.Substring(_.IndexOf("Current IP Address: "))
-                .Replace ("Current IP Address: ", "")
-                .Replace("</body></html>", "").Trim()),
+            new IPRecipy("http://ipinfo.io/json", _ => AsDynamicJson(_).ip),
+            new IPRecipy("http://what-is-my-ip.net/?json", _ => (string)AsDynamicJson(_)),
         };
 
         public static IEnumerable<IPAnswer> GetAddresses()
         {
-            return recipies.Select(_ => _.GetAsync(CancellationToken.None).Result);
+            var tasks = recipies.Select(_ => _.GetAsync(CancellationToken.None)).ToArray();
+            Task.WaitAll(tasks);
+            return tasks.Select(_ => _.Result);
         }
 
         public static IPAnswer GetAddress()
