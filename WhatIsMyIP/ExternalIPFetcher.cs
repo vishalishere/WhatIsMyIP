@@ -43,6 +43,7 @@
         private static readonly List<IPRecipy> recipies = new List<IPRecipy> 
         {
             // new IPRecipy("http://ifconfig.me/ip", RawIpAddressAsText),
+            // new IPRecipy("http://corz.org/ip", RawIpAddressAsText),
             new IPRecipy("http://myexternalip.com/raw", RawIpAddressAsText),
             new IPRecipy("http://wtfismyip.com/text", RawIpAddressAsText),
             new IPRecipy("http://ipinfo.io/json", _ => AsDynamicJson(_).ip),
@@ -50,9 +51,13 @@
             new IPRecipy("http://api.ipify.org?format=json", _ => AsDynamicJson(_).ip),
             new IPRecipy("http://ip-api.com/json", _ => AsDynamicJson(_).query),
             new IPRecipy("http://ipinfo.io/json", _ => AsDynamicJson(_).ip),
+            new IPRecipy("http://ipinfo.io/ip", RawIpAddressAsText),
+            new IPRecipy("http://bot.whatismyipaddress.com/", RawIpAddressAsText),
+            new IPRecipy("http://icanhazip.com/", RawIpAddressAsText),
+            new IPRecipy("http://curlmyip.com/", RawIpAddressAsText),
             new IPRecipy("http://checkip.dyndns.org/", _ => _.Substring(_.IndexOf("Current IP Address: "))
                 .Replace ("Current IP Address: ", "")
-                .Replace("</body></html>", "").Trim())
+                .Replace("</body></html>", "").Trim()),
         };
 
         public static IEnumerable<IPAnswer> GetAddresses()
