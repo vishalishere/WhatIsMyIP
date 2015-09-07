@@ -44,6 +44,7 @@
         {
             // new IPRecipy("http://ifconfig.me/ip", RawIpAddressAsText),
             // new IPRecipy("http://corz.org/ip", RawIpAddressAsText),
+            new IPRecipy("http://quickhash.com/ip", RawIpAddressAsText),
             new IPRecipy("http://bot.whatismyipaddress.com/", RawIpAddressAsText),
             new IPRecipy("http://curlmyip.com/", RawIpAddressAsText),
             new IPRecipy("http://icanhazip.com/", RawIpAddressAsText),
